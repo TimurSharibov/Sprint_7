@@ -85,7 +85,7 @@ public class Order {
         this.color = color;
     }
 
-    // Конструктор для создания объекта заказа
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° Р·Р°РєР°Р·Р°
     public Order(String firstName, String lastName, String address, int metroStation, String phone, int rentTime, String deliveryDate, String comment, List<String> color) {
         this.firstName = firstName;
         this.lastName = lastName;
