@@ -6,10 +6,11 @@ import models.Order;
 import io.qameta.allure.Step;
 
 import static io.restassured.RestAssured.given;
+import static utils.Config.*;
 
 public class OrderHelper {
 
-    private static final String ORDERS_PATH = "/api/v1/orders";
+    private static final String ORDERS_PATH = BASE_URL + "/api/v1/orders";
 
     @Step("Создание заказа {order}")
     public static Response createOrder(Order order) {

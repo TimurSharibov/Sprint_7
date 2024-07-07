@@ -1,5 +1,6 @@
 package tests;
 
+import io.restassured.RestAssured;
 import helpers.CourierHelper;
 import models.Courier;
 import io.restassured.response.Response;
@@ -25,7 +26,6 @@ public class CourierTests extends RestAssuredConfig {
         courier = new Courier(login, "1234", "saske");
     }
 
-    @Step("Создание курьера")
     @Test
     @Description("Создание нового курьера")
     public void createCourier() {
@@ -33,7 +33,6 @@ public class CourierTests extends RestAssuredConfig {
         response.then().statusCode(201).and().body("ok", equalTo(true));
     }
 
-    @Step("Создание дублирующего курьера")
     @Test
     @Description("Проверка ошибки при создании дублирующего курьера")
     public void createDuplicateCourier() {
@@ -42,7 +41,6 @@ public class CourierTests extends RestAssuredConfig {
         response.then().statusCode(409);
     }
 
-    @Step("Создание курьера без обязательного поля")
     @Test
     @Description("Проверка ошибки при создании курьера без обязательного поля")
     public void createCourierWithoutRequiredField() {
@@ -51,7 +49,6 @@ public class CourierTests extends RestAssuredConfig {
         response.then().statusCode(400);
     }
 
-    @Step("Авторизация курьера")
     @Test
     @Description("Авторизация курьера с корректными данными")
     public void loginCourier() {
@@ -61,7 +58,6 @@ public class CourierTests extends RestAssuredConfig {
         courierId = response.jsonPath().getInt("id");
     }
 
-    @Step("Авторизация курьера без обязательного поля")
     @Test
     @Description("Проверка ошибки при авторизации курьера без обязательного поля")
     public void loginCourierWithoutRequiredField() {

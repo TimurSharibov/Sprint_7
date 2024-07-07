@@ -98,5 +98,5 @@ public class Order {
         this.color = color;
     }
 
-    // Getters and setters
+
 }

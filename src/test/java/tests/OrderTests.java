@@ -37,7 +37,6 @@ public class OrderTests extends RestAssuredConfig {
         order = new Order("Naruto", "Uchiha", "Konoha, 142 apt.", 4, "+7 800 355 35 35", 5, "2020-06-06", "Saske, come back to Konoha", Arrays.asList(color.split(",")));
     }
 
-    @Step("Создание заказа")
     @Test
     @Description("Создание заказа с различными цветами")
     public void createOrder() {
@@ -45,7 +44,6 @@ public class OrderTests extends RestAssuredConfig {
         response.then().statusCode(201).and().body("track", notNullValue());
     }
 
-    @Step("Получение списка заказов")
     @Test
     @Description("Получение списка всех заказов")
     public void getOrderList() {

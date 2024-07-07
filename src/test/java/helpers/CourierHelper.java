@@ -6,10 +6,11 @@ import models.Courier;
 import io.qameta.allure.Step;
 
 import static io.restassured.RestAssured.given;
+import static utils.Config.*;
 
 public class CourierHelper {
 
-    private static final String COURIER_PATH = "/api/v1/courier";
+    private static final String COURIER_PATH = BASE_URL + "/api/v1/courier";
     private static final String COURIER_LOGIN_PATH = COURIER_PATH + "/login";
 
     @Step("Создание курьера {courier}")
