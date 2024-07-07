@@ -35,5 +35,5 @@ public class Courier {
         this.firstName = firstName;
     }
 
-    // Getters and setters
+
 }
