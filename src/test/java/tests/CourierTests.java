@@ -1,13 +1,13 @@
 package tests;
 
-import io.restassured.RestAssured;
 import helpers.CourierHelper;
-import models.Courier;
-import io.restassured.response.Response;
-import org.junit.*;
-import utils.RestAssuredConfig;
 import io.qameta.allure.Description;
-import io.qameta.allure.Step;
+import io.restassured.response.Response;
+import models.Courier;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import utils.RestAssuredConfig;
 
 import java.util.Random;
 
@@ -27,22 +27,39 @@ public class CourierTests extends RestAssuredConfig {
     }
 
     @Test
-    @Description("Создание нового курьера")
+    @Description("РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РєСѓСЂСЊРµСЂР°")
     public void createCourier() {
         Response response = CourierHelper.createCourier(courier);
         response.then().statusCode(201).and().body("ok", equalTo(true));
+
+        // Р”РѕР±Р°РІР»СЏРµРј РїСЂРѕРІРµСЂРєСѓ, С‡С‚Рѕ РїРѕР»Рµ id РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РІ РѕС‚РІРµС‚Рµ
+        if (response.jsonPath().get("id") != null) {
+            courierId = response.jsonPath().getInt("id");
+        } else {
+            System.out.println("РћС€РёР±РєР°: РїРѕР»Рµ 'id' РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ РѕС‚РІРµС‚Рµ.");
+        }
     }
 
     @Test
-    @Description("Проверка ошибки при создании дублирующего курьера")
+    @Description("РџСЂРѕРІРµСЂРєР° РѕС€РёР±РєРё РїСЂРё СЃРѕР·РґР°РЅРёРё РґСѓР±Р»РёСЂСѓСЋС‰РµРіРѕ РєСѓСЂСЊРµСЂР°")
     public void createDuplicateCourier() {
-        CourierHelper.createCourier(courier);
+        // Create the initial courier
         Response response = CourierHelper.createCourier(courier);
-        response.then().statusCode(409);
+        response.then().statusCode(201).and().body("ok", equalTo(true));
+
+        if (response.jsonPath().get("id") != null) {
+            courierId = response.jsonPath().getInt("id");
+        } else {
+            System.out.println("РћС€РёР±РєР°: РїРѕР»Рµ 'id' РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ РѕС‚РІРµС‚Рµ.");
+        }
+
+        // Attempt to create a duplicate courier
+        Response duplicateResponse = CourierHelper.createCourier(courier);
+        duplicateResponse.then().statusCode(409);
     }
 
     @Test
-    @Description("Проверка ошибки при создании курьера без обязательного поля")
+    @Description("РџСЂРѕРІРµСЂРєР° РѕС€РёР±РєРё РїСЂРё СЃРѕР·РґР°РЅРёРё РєСѓСЂСЊРµСЂР° Р±РµР· РѕР±СЏР·Р°С‚РµР»СЊРЅРѕРіРѕ РїРѕР»СЏ")
     public void createCourierWithoutRequiredField() {
         Courier invalidCourier = new Courier("", "1234", "saske");
         Response response = CourierHelper.createCourier(invalidCourier);
@@ -50,16 +67,29 @@ public class CourierTests extends RestAssuredConfig {
     }
 
     @Test
-    @Description("Авторизация курьера с корректными данными")
+    @Description("РђРІС‚РѕСЂРёР·Р°С†РёСЏ РєСѓСЂСЊРµСЂР° СЃ РєРѕСЂСЂРµРєС‚РЅС‹РјРё РґР°РЅРЅС‹РјРё")
     public void loginCourier() {
-        CourierHelper.createCourier(courier);
-        Response response = CourierHelper.loginCourier(courier);
-        response.then().statusCode(200).and().body("id", notNullValue());
-        courierId = response.jsonPath().getInt("id");
+        Response createResponse = CourierHelper.createCourier(courier);
+        createResponse.then().statusCode(201).and().body("ok", equalTo(true));
+
+        if (createResponse.jsonPath().get("id") != null) {
+            courierId = createResponse.jsonPath().getInt("id");
+        } else {
+            System.out.println("РћС€РёР±РєР°: РїРѕР»Рµ 'id' РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ РѕС‚РІРµС‚Рµ.");
+        }
+
+        Response loginResponse = CourierHelper.loginCourier(courier);
+        loginResponse.then().statusCode(200).and().body("id", notNullValue());
+
+        if (loginResponse.jsonPath().get("id") != null) {
+            courierId = loginResponse.jsonPath().getInt("id");
+        } else {
+            System.out.println("РћС€РёР±РєР°: РїРѕР»Рµ 'id' РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ РѕС‚РІРµС‚Рµ.");
+        }
     }
 
     @Test
-    @Description("Проверка ошибки при авторизации курьера без обязательного поля")
+    @Description("РџСЂРѕРІРµСЂРєР° РѕС€РёР±РєРё РїСЂРё Р°РІС‚РѕСЂРёР·Р°С†РёРё РєСѓСЂСЊРµСЂР° Р±РµР· РѕР±СЏР·Р°С‚РµР»СЊРЅРѕРіРѕ РїРѕР»СЏ")
     public void loginCourierWithoutRequiredField() {
         Courier invalidCourier = new Courier("", "1234", "saske");
         Response response = CourierHelper.loginCourier(invalidCourier);
