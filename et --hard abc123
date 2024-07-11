@@ -1,0 +1,29 @@
+[33mcommit 10299e519f44682c56556e4c5bcce82bac335291[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m)[m
+Author: TimurSharibov <sharibovtimur@gmail.com>
+Date:   Sun Jul 7 08:59:09 2024 +0300
+
+    Исправлены замечания:
+    Использовать параметризацию в создании заказа
+    Вынести все урлы как константы
+    Расставить степы с именами
+    Всем тестам дать аллюр описания
+    Везде проверить чтобы удалялся созданный курьер
+    Остальное по коду
+
+[33mcommit 6b4a530e3c93483f9ae560381f6f7821c9a60e51[m
+Author: TimurSharibov <sharibovtimur@gmail.com>
+Date:   Wed Jul 3 23:33:22 2024 +0300
+
+    Utf-8
+
+[33mcommit 4146611dfe0a8d1f3d7c7cf68fe73d0c37eb0e00[m[33m ([m[1;31morigin/develop[m[33m)[m
+Author: TimurSharibov <sharibovtimur@gmail.com>
+Date:   Wed Jul 3 23:32:03 2024 +0300
+
+    develop branch
+
+[33mcommit 9086118c71ac6baa00b314d3541b71848caadedc[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: TimurSharibov <sharibovtimur@gmail.com>
+Date:   Wed Jul 3 19:49:25 2024 +0300
+
+    first commit
